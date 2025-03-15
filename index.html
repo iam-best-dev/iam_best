@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>i am best - Project Portfolio</title>
+    <style>
+        :root {
+            --primary-green: #13a357;
+            --lime-green: #8dd073;
+            --white: #f6f6f5;
+            --dark-bg: #0d0d0d;
+            --dark-brown: #513A1F;
+            --minecraft-green: #5EAC25;
+            --heart-red: #E91E63;
+            --fries-red: #D32F2F;
+            --green-glow: 0 0 15px rgba(19, 163, 87, 0.7);
+            --iambest-green: #13a357;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--white);
+            line-height: 1.6;
+        }
+        
+        header {
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(19, 163, 87, 0.3);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .iambest-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo-circle {
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--iambest-green);
+            border-radius: 50%;
+            box-shadow: var(--green-glow);
+        }
+        
+        .logo-line {
+            width: 5px;
+            height: 30px;
+            background-color: var(--iambest-green);
+            box-shadow: var(--green-glow);
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo-made-by {
+            font-size: 1rem;
+            color: var(--iambest-green);
+            opacity: 0.9;
+        }
+        
+        .logo-name {
+            font-size: 1.8rem;
+            color: var(--white);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-icons {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .hero-icon {
+            position: absolute;
+            font-size: 4rem;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+        
+        .hero .subtitle {
+            color: var(--lime-green);
+            text-shadow: var(--green-glow);
+        }
+        
+        .projects {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--primary-green);
+            box-shadow: var(--green-glow);
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background-color: rgba(246, 246, 245, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--green-glow);
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        
+        .transify-card::before {
+            background-color: var(--heart-red);
+        }
+        
+        .reanki-card::before {
+            background-color: var(--primary-green);
+        }
+        
+        .truth-card::before {
+            background-color: var(--primary-green);
+        }
+        
+        .stw-card::before {
+            background-color: var(--minecraft-green);
+        }
+        
+        .fries-card::before {
+            background-color: var(--fries-red);
+        }
+        
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .project-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem 0;
+            background-color: rgba(13, 13, 13, 0.2);
+        }
+        
+        .project-icon img {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+        }
+        
+        .project-content {
+            padding: 1.5rem;
+        }
+        
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .transify-title {
+            color: var(--heart-red);
+        }
+        
+        .reanki-title {
+            color: var(--primary-green);
+        }
+        
+        .truth-title {
+            color: var(--primary-green);
+        }
+        
+        .stw-title {
+            color: var(--minecraft-green);
+        }
+        
+        .fries-title {
+            color: var(--fries-red);
+        }
+        
+        .project-description {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            color: rgba(246, 246, 245, 0.8);
+        }
+        
+        .project-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: transparent;
+            text-decoration: none;
+            border: 1px solid;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .transify-link {
+            color: var(--heart-red);
+            border-color: var(--heart-red);
+        }
+        
+        .transify-link:hover {
+            background-color: var(--heart-red);
+            color: var(--dark-bg);
+        }
+        
+        .reanki-link {
+            color: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+        
+        .reanki-link:hover {
+            background-color: var(--primary-green);
+            color: var(--dark-bg);
+        }
+        
+        .truth-link {
+            color: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+        
+        .truth-link:hover {
+            background-color: var(--primary-green);
+            color: var(--dark-bg);
+        }
+        
+        .stw-link {
+            color: var(--minecraft-green);
+            border-color: var(--minecraft-green);
+        }
+        
+        .stw-link:hover {
+            background-color: var(--minecraft-green);
+            color: var(--dark-bg);
+        }
+        
+        .fries-link {
+            color: var(--fries-red);
+            border-color: var(--fries-red);
+        }
+        
+        .fries-link:hover {
+            background-color: var(--fries-red);
+            color: var(--dark-bg);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(19, 163, 87, 0.3);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
+        }
+        
+        @keyframes glow {
+            0% { filter: brightness(1) drop-shadow(0 0 5px rgba(19, 163, 87, 0.7)); }
+            50% { filter: brightness(1.3) drop-shadow(0 0 10px rgba(19, 163, 87, 0.9)); }
+            100% { filter: brightness(1) drop-shadow(0 0 5px rgba(19, 163, 87, 0.7)); }
+        }
+        
+        .logo-glow {
+            animation: glow 3s ease-in-out infinite;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1s; }
+        
+        /* Minecraft block animation */
+        @keyframes rotate {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+        
+        .minecraft-rotate {
+            animation: rotate 15s linear infinite;
+            transform-style: preserve-3d;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo-name {
+                font-size: 1.5rem;
+            }
+            
+            .logo-made-by {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="iambest-logo">
+            <div style="display: flex; flex-direction: column; align-items: flex-start; margin-right: 10px;">
+                <div class="logo-circle logo-glow"></div>
+                <div class="logo-line logo-glow"></div>
+            </div>
+            <div>
+                <div class="logo-made-by">Made by</div>
+                <div class="logo-name">i am best</div>
+            </div>
+        </div>
+        <nav>
+            <a href="#projects" style="color: #f6f6f5; text-decoration: none; margin-left: 15px;">Projects</a>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="fade-in">Innovative <span class="subtitle">Projects</span></h1>
+                <p class="fade-in delay-1">Explore a collection of groundbreaking projects designed to transform how we connect, learn, and experience the digital world.</p>
+            </div>
+        </section>
+        
+        <section id="projects" class="projects container">
+            <h2 class="section-title fade-in delay-2">Featured Projects</h2>
+            
+            <div class="project-grid">
+                <div class="project-card transify-card fade-in delay-1">
+                    <div class="project-icon">
+                        <img src="/api/placeholder/64/64" alt="Heart icon" style="filter: hue-rotate(320deg);" />
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title transify-title">Transify</h3>
+                        <p class="project-description">A Translation Service designed to break down language barriers and connect people across cultures seamlessly.</p>
+                        <a href="https://example.com" class="project-link transify-link">View Project</a>
+                    </div>
+                </div>
+                
+                <div class="project-card reanki-card fade-in delay-2">
+                    <div class="project-icon">
+                        <img src="/api/placeholder/64/64" alt="Re-Anki icon" style="filter: hue-rotate(120deg);" />
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title reanki-title">Re-Anki</h3>
+                        <p class="project-description">A Project to revitalize Anki and bring back its original essence while enhancing the learning experience.</p>
+                        <a href="https://example.com" class="project-link reanki-link">View Project</a>
+                    </div>
+                </div>
+                
+                <div class="project-card truth-card fade-in delay-3">
+                    <div class="project-icon">
+                        <img src="/api/placeholder/64/64" alt="Truth globe icon" style="filter: hue-rotate(120deg);" />
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title truth-title">Truth</h3>
+                        <p class="project-description">Access News and Information around the World without censorship, providing a platform for unfiltered perspectives.</p>
+                        <a href="https://example.com" class="project-link truth-link">View Project</a>
+                    </div>
+                </div>
+                
+                <div class="project-card stw-card fade-in delay-4">
+                    <div class="project-icon">
+                        <img src="/api/placeholder/64/64" alt="Minecraft block" style="filter: hue-rotate(90deg) brightness(1.2);" class="minecraft-rotate" />
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title stw-title">STWForALL</h3>
+                        <p class="project-description">A revolutionary Minecraft Server and related projects that represent the future of Minecraft gaming experiences.</p>
+                        <a href="https://example.com" class="project-link stw-link">View Project</a>
+                    </div>
+                </div>
+                
+                <div class="project-card fries-card fade-in delay-5">
+                    <div class="project-icon">
+                        <img src="/api/placeholder/64/64" alt="Fries AI icon" style="filter: hue-rotate(330deg);" />
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title fries-title">Fries AI</h3>
+                        <p class="project-description">Innovative AI system powered by shapes, revolutionizing how we interact with artificial intelligence.</p>
+                        <a href="https://example.com" class="project-link fries-link">View Project</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 i am best. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Simple animation logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.fade-in').forEach(item => {
+                observer.observe(item);
+            });
+            
+            // Add smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
