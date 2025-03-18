@@ -1,0 +1,6 @@
+<HeroBasic
+  className="hero-basic-instance"
+  platform="desktop"
+  textContentTitleSubtitle="A Project to make Anki what it used to be."
+  textContentTitleTitle="Re-Anki"
+/>;
