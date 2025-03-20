@@ -1,269 +1,392 @@
-'use client';
-
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { ArrowRight, Code, Mail, CircleQuestion } from 'lucide-react';
+import { ArrowRight, Code, Mail, CircleHelp } from 'lucide-react';
 
 // Color Palette
 const colors = {
-  background: '#000000',
-  lime: '#13a357',
-  secondary: '#f6f6f5',
-  text: '#cccccc',
-  primary: '#8dd073',
-  cardBackground: '#8080801A',
-  faqBackground: '#8080801A'
+    background: '#000000',
+    lime: '#13a357',
+    secondary: '#f6f6f5',
+    text: '#cccccc',
+    primary: '#8dd073',
+    cardBackground: '#8080801A',
+    faqBackground: '#8080801A'
 };
 
 // Project Data
 const projects = [
-  {
-    title: 'Transify',
-    description: 'A Translation Service',
-    link: 'https://example.com',
-    image: 'https://placehold.co/100x100/EEE/31343C'
-  },
-  {
-    title: 'Re-Anki',
-    description: 'A Project to make Anki what it used to be',
-    link: 'https://example.com/reanki',
-    image: 'https://placehold.co/100x100/EEE/31343C'
-  },
-  {
-    title: 'Truth',
-    description: 'To get News and Information around the World without censorship',
-    link: 'https://example.com',
-    image: 'https://placehold.co/100x100/EEE/31343C'
-  },
-  {
-    title: 'STWForALL',
-    description: 'A Minecraft Server and other Minecraft related Projects (the future of Minecraft)',
-    link: 'https://example.com',
-    image: 'https://placehold.co/100x100/EEE/31343C'
-  },
-  {
-    title: 'Fries AI',
-    description: 'AI powered by shapes',
-    link: 'https://example.com',
-    image: 'https://placehold.co/100x100/EEE/31343C'
-  }
+    {
+        title: 'Transify',
+        description: 'A Translation Service',
+        link: 'https://example.com',
+        image: 'https://placehold.co/100x100/EEE/31343C',
+    },
+    {
+        title: 'Re-Anki',
+        description: 'A Project to make Anki what it used to be',
+        link: 'https://example.com/reanki',
+        image: 'https://pbs.twimg.com/profile_images/1899905714685870080/-mt_-j7f_400x400.jpg',
+    },
+    {
+        title: 'Truth',
+        description: 'To get News and Information around the World without censorship',
+        link: 'https://example.com',
+        image: 'https://placehold.co/100x100/EEE/31343C',
+    },
+    {
+        title: 'STWForALL',
+        description: 'A Minecraft Server and other Minecraft related Projects (the future of Minecraft)',
+        link: 'https://example.com',
+        image: 'https://placehold.co/100x100/EEE/31343C',
+    },
+    {
+        title: 'Fries AI',
+        description: 'AI powered by shapes',
+        link: 'https://example.com',
+        image: 'https://placehold.co/100x100/EEE/31343C',
+    },
 ];
 
 // Animation Variants
 const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeInOut' } },
-  hover: { scale: 1.03, boxShadow: `0px 4px 12px rgba(102, 211, 115, 0.3)`, transition: { duration: 0.2 } },
-  exit: { opacity: 0, y: -20, transition: { duration: 0.4 } }
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeInOut' } },
+    hover: { scale: 1.03, boxShadow: `0px 4px 12px rgba(102, 211, 115, 0.3)`, transition: { duration: 0.2 } },
+    exit: { opacity: 0, y: -20, transition: { duration: 0.4 } }
 };
 
-// Contact Us Component
-const ContactUs = () => (
-  <div className="container mx-auto px-4 py-12">
-    <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 flex items-center justify-center gap-3" style={{ color: colors.lime }}>
-      <Mail className="w-8 h-8" />
-      Contact Us
-    </h2>
-    <div className="text-lg text-center" style={{ color: colors.text }}>
-      Reach out to us at:
-      <div className="mt-4">
-        <a
-          href="mailto:madebyiambest@gmail.com"
-          className="text-lg underline hover:opacity-80"
-          style={{ color: colors.primary }}
-        >
-          madebyiambest@gmail.com
-        </a>
-      </div>
-    </div>
-  </div>
-);
+// Image Template Component
+const ImageTemplate = ({ imageUrl, altText }: { imageUrl: string; altText: string }) => {
+    const [src, setSrc] = useState(imageUrl);
+
+    const handleError = () => {
+        setSrc('https://placehold.co/200x100/EEE/31343C');
+    };
+
+    return (
+        <img
+            src={src}
+            alt={altText}
+            className="w-full h-auto rounded-t-lg object-cover"
+            onError={handleError}
+        />
+    );
+};
+
+// Contact Us Page Component
+const ContactUs = () => {
+    return (
+        <div className="container mx-auto px-4 py-12">
+            <h2
+                className="text-3xl sm:text-4xl font-bold text-center mb-8 flex items-center justify-center gap-3"
+                style={{ color: colors.lime }}
+            >
+                <Mail className="w-8 h-8" />
+                Contact Us
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <div>
+                    <p className="text-lg mb-6" style={{ color: colors.text }}>
+                        You reach out to us here:
+                    </p>
+                    <div className="mt-6">
+                        <a
+                            href="mailto:madebyiambest@gmail.com"
+                            className="text-lg text-blue-400 hover:text-blue-300 transition-colors duration-200 flex items-center gap-2"
+                            style={{ color: colors.primary }}
+                        >
+                            madebyiambest@gmail.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 // FAQ Component
 const FAQ = () => {
-  const faqs = [
-    {
-      question: 'What is this website about?',
-      answer: 'This website showcases a collection of projects.'
-    },
-    {
-      question: 'How can I contact the developers?',
-      answer: 'You can reach out through the email provided in the Contact Us section.'
-    },
-    {
-      question: 'Are the projects open source?',
-      answer: 'Please refer to the individual project links for details.'
-    }
-  ];
+    const faqs = [
+        {
+            question: "What is this website about?",
+            answer: "This website showcases a collection of projects.",
+        },
+        {
+            question: "How can I contact the developers?",
+            answer: "You can reach out through the email provided in the Contact Us section.",
+        },
+        {
+            question: "Are the projects open source?",
+            answer: "Please refer to the individual project links for details.",
+        },
+    ];
 
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const toggleFAQ = (index: number) => setOpenIndex((prev) => (prev === index ? null : index));
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  return (
-    <div className="container mx-auto px-4 py-12">
-      <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4 flex items-center justify-center gap-3" style={{ color: colors.lime }}>
-        <CircleQuestion className="w-8 h-8" />
-        FAQ
-      </h2>
-      <p className="text-gray-400 text-center mb-8">(Frequently Asked Questions)</p>
-      <div className="space-y-4">
-        {faqs.map((faq, index) => (
-          <div
-            key={index}
-            className={cn('border rounded-lg p-4 shadow-md transition-all duration-300')}
-            style={{ backgroundColor: colors.faqBackground, borderColor: `${colors.lime}20` }}
-          >
-            <button
-              onClick={() => toggleFAQ(index)}
-              className="w-full text-left flex justify-between items-center text-lg font-semibold text-gray-300 hover:text-white"
-            >
-              {faq.question}
-              <ArrowRight className={cn('w-5 h-5 transition-transform duration-300', openIndex === index ? 'rotate-90' : 'rotate-0')} />
-            </button>
-            <AnimatePresence>
-              {openIndex === index && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3, ease: 'easeInOut' }}
-                  className="mt-2 text-gray-400"
-                >
-                  {faq.answer}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+    const toggleFAQ = (index: number) => {
+        setOpenIndex(prevIndex => (prevIndex === index ? null : index));
+    };
+
+    return (
+        <div className="container mx-auto px-4 py-12" >
+            <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4 flex items-center justify-center gap-3" style={{ color: colors.lime }}>
+                <CircleHelp className="w-8 h-8" />
+                FAQ
+            </h2>
+            <p className="text-gray-400 text-center mb-8">(Frequently Asked Questions)</p>
+            <div className="space-y-4">
+                {faqs.map((faq, index) => (
+                    <div
+                        key={index}
+                        className={cn(
+                            "border rounded-lg p-4 transition-all duration-300",
+                            "bg-gray-800 border-gray-700",
+                            "shadow-md"
+                        )}
+                        style={{ backgroundColor: colors.faqBackground, borderColor: colors.lime + '20' }}
+                    >
+                        <button
+                            className={cn(
+                                "w-full flex justify-between items-center text-left",
+                                "text-lg font-semibold py-2 transition-colors duration-200",
+                                "text-gray-300 hover:text-white"
+                            )}
+                            onClick={() => toggleFAQ(index)}
+                        >
+                            {faq.question}
+                            <ArrowRight
+                                className={cn(
+                                    "w-5 h-5 transition-transform duration-300",
+                                    openIndex === index ? "rotate-180" : "rotate-0"
+                                )}
+                            />
+                        </button>
+                        <AnimatePresence>
+                            {openIndex === index && (
+                                <motion.div
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: 'auto' }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                                    className="mt-2 text-gray-400"
+                                >
+                                    {faq.answer}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
 };
 
 // Main Website Component
 const Website = () => {
-  const projectsRef = useRef<HTMLDivElement | null>(null);
-  const [isProjectsVisible, setIsProjectsVisible] = useState(false);
-  const [loading, setLoading] = useState(true);
+    const projectsRef = useRef<HTMLDivElement>(null);
+    const [isProjectsVisible, setIsProjectsVisible] = useState(false);
 
-  useEffect(() => {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap';
-    document.head.appendChild(link);
 
-    const handleScroll = () => {
-      if (projectsRef.current) {
-        const rect = projectsRef.current.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.8) setIsProjectsVisible(true);
-      }
-    };
+    useEffect(() => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap';
+        document.head.appendChild(link);
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // trigger on mount too
-    const timer = setTimeout(() => setLoading(false), 500);
+        const handleScroll = () => {
+            if (projectsRef.current) {
+                const rect = projectsRef.current.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.8) {
+                    setIsProjectsVisible(true);
+                }
+            }
+        };
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      clearTimeout(timer);
-    };
-  }, []);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
-  if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: colors.background }}>
-        <p className="text-2xl text-gray-400">Loading...</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen" style={{ backgroundColor: colors.background }}>
-      <div className="container mx-auto px-4 py-12">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <div className="w-48 h-24 mx-auto bg-gray-700 rounded-lg flex items-center justify-center text-gray-400">
-              Image Placeholder
-            </div>
-            <p className="text-3xl mt-6">
-              Trying to make{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-green-400 to-lime-400">everyone!</span>
-            </p>
-            <a
-              href="https://example.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block mt-6 text-lg px-6 py-3 rounded-full border border-green-500/30 text-green-400 hover:text-green-300 hover:border-green-500/50 hover:bg-lime-500/20 transition"
-            >
-              Learn more
-            </a>
-          </motion.div>
-        </div>
-
-        {/* Projects Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold mb-4 flex items-center justify-center gap-3" style={{ color: colors.lime }}>
-            <Code className="w-8 h-8" /> Projects
-          </h1>
-          <p className="text-lg text-gray-400 max-w-xl mx-auto mb-8">Some of our Projects we've been working on!</p>
-          <div ref={projectsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <AnimatePresence>
-              {projects.map((project, index) => (
-                <motion.div
-                  key={index}
-                  variants={cardVariants}
-                  initial="hidden"
-                  animate={isProjectsVisible ? 'visible' : 'hidden'}
-                  exit="exit"
-                  whileHover="hover"
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Card
-                    className="overflow-hidden shadow-lg border backdrop-blur-md hover:scale-105 transition-all duration-300"
-                    style={{ backgroundColor: colors.cardBackground, borderColor: `${colors.lime}20` }}
-                  >
-                    <CardHeader className="flex items-center gap-4">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-16 h-16 rounded-full object-cover"
-                        onError={(e) => ((e.target as HTMLImageElement).src = 'https://placehold.co/100x100')}
-                      />
-                      <div>
-                        <CardTitle className="text-xl font-semibold" style={{ color: colors.primary }}>
-                          {project.title}
-                        </CardTitle>
-                        <CardDescription style={{ color: colors.text }}>{project.description}</CardDescription>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <a href={project.link} target="_blank" rel="noopener noreferrer" className="block w-full">
+        <div
+            className="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center py-12"
+            style={{
+                backgroundColor: colors.background,
+            }}
+        >
+            <div className="container mx-auto px-4">
+                {/* Top Section */}
+                <div className="text-center mb-12 relative">
+                    <motion.h2
+                        initial={{ opacity: 0, y: -30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: 'easeInOut' }}
+                        className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white flex justify-center items-center font-['Bungee']"
+                    >
+                        <div className="w-48 h-24 bg-gray-700 rounded-lg flex items-center justify-center mx-auto">
+                            <span className="text-gray-400">Image Placeholder</span>
+                        </div>
+                    </motion.h2>
+                    <motion.p
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: 'easeInOut', delay: 0.3 }}
+                        className={cn(
+                            "text-2xl sm:text-3xl md:text-4xl mb-8"
+                        )}
+                    >
+                        Trying to make <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-green-400 to-lime-400">everyone!</span>
+                    </motion.p>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6, ease: 'easeInOut', delay: 0.6 }}
+                    >
                         <Button
-                          className="w-full text-green-400 border border-green-500/30 hover:border-green-500/50 hover:bg-lime-500/20 transition"
-                          variant="outline"
+                            asChild
+                            variant="outline"
+                            className={cn(
+                                "bg-gradient-to-r",
+                                "from-green-500/20 to-green-500/30",
+                                "text-green-400 hover:text-green-300",
+                                "border-green-500/30 hover:border-green-500/50",
+                                "shadow-lg hover:shadow-green-500/20",
+                                "transition-all duration-300",
+                                "px-8 py-3 rounded-full text-lg",
+                                "hover:bg-lime-500/20"
+                            )}
                         >
-                          <span className="flex items-center justify-center w-full">
-                            Visit Project <ArrowRight className="w-4 h-4 ml-2" />
-                          </span>
+                            <a href="https://example.com" target="_blank" rel="noopener noreferrer">
+                                Learn more
+                            </a>
                         </Button>
-                      </a>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-        </div>
+                    </motion.div>
+                </div>
 
-        <FAQ />
-        <ContactUs />
-      </div>
-    </div>
-  );
+                {/* Placeholder Above Everything */}
+                <motion.div
+                    initial={{ opacity: 0, y: -50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
+                    viewport={{ once: true }}
+                    className="mb-12 text-center"
+                >
+                    <div
+                        className="w-full max-w-md mx-auto h-24 bg-gray-700 rounded-lg flex items-center justify-center"
+                        style={{ backgroundColor: '#80808033' }}
+                    >
+                        <span className="text-gray-400">Placeholder for Instructions</span>
+                    </div>
+                </motion.div>
+
+                {/* Everything below the "Learn more" button */}
+                <div>
+                    <div className="text-center mb-12">
+                        <motion.h1
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, ease: 'easeInOut' }}
+                            className="text-4xl sm:text-5xl md:text-6xl font-bold text-center mb-4 flex items-center justify-center gap-3 font-['Bungee']"
+                            style={{ color: colors.lime }}
+                        >
+                            <Code className="w-8 h-8" />
+                            Projects
+                        </motion.h1>
+
+                        <motion.p
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, ease: 'easeInOut', delay: 0.3 }}
+                            className="text-lg text-gray-500 max-w-2xl mx-auto"
+                            style={{ color: colors.text }}
+                        >
+                            Some of our Projects we&apos;ve been working on!
+                        </motion.p>
+                    </div>
+                    <div ref={projectsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <AnimatePresence>
+                            {projects.map((project, index) => (
+                                <motion.div
+                                    key={index}
+                                    variants={cardVariants}
+                                    initial="hidden"
+                                    animate={isProjectsVisible ? "visible" : "hidden"}
+                                    exit="exit"
+                                    whileHover="hover"
+                                    transition={{ delay: index * 0.2 }}
+                                >
+                                    <Card
+                                        className={cn(
+                                            "border",
+                                            "backdrop-blur-md",
+                                            "shadow-lg hover:shadow-xl",
+                                            "transition-all duration-300",
+                                            "overflow-hidden",
+                                            "hover:scale-[1.01]"
+                                        )}
+                                        style={{
+                                            backgroundColor: colors.cardBackground,
+                                            borderColor: colors.lime + '20'
+                                        }}
+                                    >
+                                        <CardHeader>
+                                            <div className="flex items-center gap-4 mb-4">
+                                                <div className="w-16 h-16 rounded-full bg-gray-300 flex-shrink-0">
+                                                    <img
+                                                        src={project.image}
+                                                        alt={`${project.title} Logo`}
+                                                        className="w-full h-full rounded-full object-cover"
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <CardTitle
+                                                        className="text-xl font-semibold font-['Bungee']"
+                                                        style={{ color: colors.primary }}
+                                                    >
+                                                        {project.title}
+                                                    </CardTitle>
+                                                    <CardDescription className="text-lg" style={{ color: colors.text }}>
+                                                        {project.description}
+                                                    </CardDescription>
+                                                </div>
+                                            </div>
+                                        </CardHeader>
+
+                                        <CardContent>
+                                            <Button
+                                                asChild
+                                                variant="outline"
+                                                className={cn(
+                                                    "w-full bg-gradient-to-r",
+                                                    "from-green-500/20 to-green-500/30",
+                                                    "text-green-400 hover:text-green-300",
+                                                    "border-green-500/30 hover:border-green-500/50",
+                                                    "shadow-lg hover:shadow-green-500/20",
+                                                    "transition-all duration-300",
+                                                    "backdrop-blur-sm",
+                                                    "flex items-center justify-between",
+                                                    "hover:bg-lime-500/20"
+                                                )}
+                                            >
+                                                <a href={project.link} target="_blank" rel="noopener noreferrer">
+                                                    Visit Project
+                                                    <ArrowRight className="ml-2 w-4 h-4" />
+                                                </a>
+                                            </Button>
+                                        </CardContent>
+                                    </Card>
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
+                    </div>
+                    <FAQ />
+                    <ContactUs />
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default Website;
